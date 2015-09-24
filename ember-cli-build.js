@@ -1,10 +1,11 @@
 /* global require, module */
-var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+var mergeTrees = require('broccoli-merge-trees');
 
 module.exports = function(defaults) {
-  var app = new EmberApp(defaults, {
-    // Add options here
-  });
+  // builds out desktop-app.js & desktop-app.css
+  var desktopApp = require('./build/desktop')(defaults);
+  // builds out mobile-app.js & mobile-app.css
+  var mobileApp  = require('./build/mobile')(defaults);
 
   // Use `app.import` to add additional libraries to the generated
   // output files.
@@ -18,6 +19,14 @@ module.exports = function(defaults) {
   // modules that you would like to import into your application
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
+
+  if (process.env.MOBILE) {
+    return mobileApp.toTree();
+  } else if (process.env.DESKTOP) {
+    return desktopApp.toTree();
+  } else {
+    return mergeTrees([mobileApp.toTree(), desktopApp.toTree()], { overwrite: true });
+  }
 
   return app.toTree();
 };
