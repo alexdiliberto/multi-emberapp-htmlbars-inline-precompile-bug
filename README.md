@@ -3,6 +3,12 @@
 This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.
 
+## How To Recreate
+
+1. clone the repo
+2. run `scripts/desktop t` and you'll see the error.
+3. For the quickest fix just remove one of the EmberApp's (so now there is only 1 EmberApp again)...so just comment out line 8 in ember-cli-build.js https://github.com/alexdiliberto/multi-emberapp-htmlbars-inline-precompile-bug/blob/master/ember-cli-build.js#L8. Now run `scripts/desktop t` and it works because there is only 1 EmberApp.
+
 ## Prerequisites
 
 You will need the following things properly installed on your computer.
